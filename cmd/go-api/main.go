@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/Ryan-Albuquerque/go-api/internal/controller"
+	"github.com/Ryan-Albuquerque/go-api/internal/infra/db"
 	"github.com/Ryan-Albuquerque/go-api/internal/usecase"
 	"github.com/gin-gonic/gin"
 )
@@ -10,6 +11,11 @@ func main() {
 	router := gin.Default()
 
 	router.SetTrustedProxies([]string{})
+
+	_, err := db.ConnectDB()
+	if err != nil {
+		panic(err)
+	}
 
 	ProductUseCase := usecase.NewProductUseCase()
 
