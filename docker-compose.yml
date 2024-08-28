@@ -3,7 +3,7 @@ version: "3.9"
 services:
   go-api:
     container_name: go-api
-    image: go-api-tutorial
+    image: go-api
     build: .
     ports:
       - "8000:8000"

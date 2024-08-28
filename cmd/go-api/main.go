@@ -34,5 +34,5 @@ func main() {
 	router.POST("/products", ProductController.CreateProduct)
 	router.GET("/products/:id", ProductController.GetProductByID)
 
-	router.Run(":8080")
+	router.Run(":8000")
 }
