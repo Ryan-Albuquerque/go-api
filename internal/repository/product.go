@@ -17,7 +17,7 @@ func NewProductRepository(db *sql.DB) *ProductRepository {
 }
 
 func (pr *ProductRepository) GetProducts() ([]model.Product, error) {
-	rows, err := pr.db.Query("SELECT * FROM products")
+	rows, err := pr.db.Query("SELECT * FROM product")
 	if err != nil {
 		return nil, err
 	}
@@ -26,7 +26,7 @@ func (pr *ProductRepository) GetProducts() ([]model.Product, error) {
 	var products []model.Product
 	for rows.Next() {
 		var product model.Product
-		err := rows.Scan(&product.ID, &product.Name, &product.Price)
+		err := rows.Scan(&product.ID, &product.Name, &product.Price, &product.CreatedAt)
 		if err != nil {
 			return nil, err
 		}
