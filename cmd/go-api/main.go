@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/Ryan-Albuquerque/go-api/internal/controller"
+	"github.com/Ryan-Albuquerque/go-api/internal/usecase"
 	"github.com/gin-gonic/gin"
 )
 
@@ -10,7 +11,9 @@ func main() {
 
 	router.SetTrustedProxies([]string{})
 
-	ProductController := controller.NewProductController()
+	ProductUseCase := usecase.NewProductUseCase()
+
+	ProductController := controller.NewProductController(ProductUseCase)
 
 	router.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
