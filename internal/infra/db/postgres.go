@@ -12,7 +12,7 @@ const (
 	port     = "5432"
 	user     = "postgres"
 	password = "1234"
-	dbname   = "go_api"
+	dbname   = "postgres"
 )
 
 func GetConnectionString() string {
