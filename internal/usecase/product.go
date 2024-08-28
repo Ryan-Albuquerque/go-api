@@ -18,3 +18,7 @@ func NewProductUseCase(pr *repository.ProductRepository) *ProductUseCase {
 func (pu *ProductUseCase) GetProducts() ([]model.Product, error) {
 	return pu.pr.GetProducts()
 }
+
+func (pu *ProductUseCase) CreateProduct(product model.Product) error {
+	return pu.pr.CreateProduct(product)
+}

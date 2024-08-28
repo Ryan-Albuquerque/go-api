@@ -3,6 +3,7 @@ package controller
 import (
 	"net/http"
 
+	"github.com/Ryan-Albuquerque/go-api/internal/model"
 	"github.com/Ryan-Albuquerque/go-api/internal/usecase"
 	"github.com/gin-gonic/gin"
 )
@@ -24,4 +25,22 @@ func (pc *ProductController) GetProducts(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, products)
+}
+
+func (pc *ProductController) CreateProduct(c *gin.Context) {
+	var product model.Product
+	err := c.BindJSON(&product)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err)
+		return
+	}
+
+	err = pc.puc.CreateProduct(product)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err)
+		return
+	}
+
+	c.Status(http.StatusCreated)
 }

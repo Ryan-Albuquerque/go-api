@@ -2,6 +2,7 @@ package repository
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/Ryan-Albuquerque/go-api/internal/model"
 )
@@ -34,4 +35,24 @@ func (pr *ProductRepository) GetProducts() ([]model.Product, error) {
 	}
 
 	return products, nil
+}
+
+func (pr *ProductRepository) CreateProduct(product model.Product) error {
+	var id int
+	query, err := pr.db.Prepare("INSERT INTO product" +
+		"(name, price)" +
+		" VALUES ($1, $2) RETURNING id")
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	err = query.QueryRow(product.Name, product.Price).Scan(&id)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
+	query.Close()
+	return nil
 }
