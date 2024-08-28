@@ -1,26 +1,20 @@
 package usecase
 
-import "github.com/Ryan-Albuquerque/go-api/internal/model"
+import (
+	"github.com/Ryan-Albuquerque/go-api/internal/model"
+	"github.com/Ryan-Albuquerque/go-api/internal/repository"
+)
 
 type ProductUseCase struct {
+	pr *repository.ProductRepository
 }
 
-func NewProductUseCase() *ProductUseCase {
-	return &ProductUseCase{}
+func NewProductUseCase(pr *repository.ProductRepository) *ProductUseCase {
+	return &ProductUseCase{
+		pr: pr,
+	}
 }
 
 func (pu *ProductUseCase) GetProducts() ([]model.Product, error) {
-	products := []model.Product{
-		{
-			ID:    1,
-			Name:  "Product 1",
-			Price: 100.00,
-		},
-		{
-			ID:    2,
-			Name:  "Product 2",
-			Price: 200.00,
-		},
-	}
-	return products, nil
+	return pu.pr.GetProducts()
 }
