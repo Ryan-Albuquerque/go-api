@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  go-api:
+    container_name: go-api
+    image: go-api-tutorial
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - go-db
+  go-db:
+    container_name: go-db
+    image: postgres:12
+    environment:
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata: {}
