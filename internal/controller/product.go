@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/Ryan-Albuquerque/go-api/internal/model"
 	"github.com/Ryan-Albuquerque/go-api/internal/usecase"
@@ -43,4 +44,28 @@ func (pc *ProductController) CreateProduct(c *gin.Context) {
 	}
 
 	c.Status(http.StatusCreated)
+}
+
+func (pc *ProductController) GetProductByID(c *gin.Context) {
+	id := c.Param("id")
+	if id == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "id is required"})
+		return
+	}
+	productId, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "id must be a number"})
+		return
+	}
+	product, err := pc.puc.GetProductByID(productId)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err)
+		return
+	}
+	if product == nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "product not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, product)
 }

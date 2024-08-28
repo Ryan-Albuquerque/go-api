@@ -32,6 +32,7 @@ func main() {
 
 	router.GET("/products", ProductController.GetProducts)
 	router.POST("/products", ProductController.CreateProduct)
+	router.GET("/products/:id", ProductController.GetProductByID)
 
 	router.Run(":8080")
 }

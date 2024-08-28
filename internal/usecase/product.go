@@ -22,3 +22,7 @@ func (pu *ProductUseCase) GetProducts() ([]model.Product, error) {
 func (pu *ProductUseCase) CreateProduct(product model.Product) error {
 	return pu.pr.CreateProduct(product)
 }
+
+func (pu *ProductUseCase) GetProductByID(id int) (*model.Product, error) {
+	return pu.pr.GetProductByID(id)
+}

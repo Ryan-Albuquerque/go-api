@@ -56,3 +56,16 @@ func (pr *ProductRepository) CreateProduct(product model.Product) error {
 	query.Close()
 	return nil
 }
+
+func (pr *ProductRepository) GetProductByID(id int) (*model.Product, error) {
+	var product model.Product
+	err := pr.db.QueryRow("SELECT * FROM product WHERE id = $1", id).Scan(&product.ID, &product.Name, &product.Price, &product.CreatedAt)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+		return nil, err
+	}
+
+	return &product, nil
+}
