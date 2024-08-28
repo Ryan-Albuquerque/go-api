@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/Ryan-Albuquerque/go-api/internal/controller"
 	"github.com/Ryan-Albuquerque/go-api/internal/infra/db"
+	"github.com/Ryan-Albuquerque/go-api/internal/repository"
 	"github.com/Ryan-Albuquerque/go-api/internal/usecase"
 	"github.com/gin-gonic/gin"
 )
@@ -12,12 +13,14 @@ func main() {
 
 	router.SetTrustedProxies([]string{})
 
-	_, err := db.ConnectDB()
+	connected, err := db.ConnectDB()
 	if err != nil {
 		panic(err)
 	}
 
-	ProductUseCase := usecase.NewProductUseCase()
+	ProductRepository := repository.NewProductRepository(connected)
+
+	ProductUseCase := usecase.NewProductUseCase(ProductRepository)
 
 	ProductController := controller.NewProductController(ProductUseCase)
 
