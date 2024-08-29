@@ -102,3 +102,29 @@ func (pc *ProductController) UpdateProduct(c *gin.Context) {
 
 	c.Status(http.StatusNoContent)
 }
+
+func (pc *ProductController) DeleteProduct(c *gin.Context) {
+	id := c.Param("id")
+	if id == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "id is required"})
+		return
+	}
+	productId, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "id must be a number"})
+		return
+	}
+
+	deletedProduct, err := pc.puc.DeleteProduct(productId)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err)
+		return
+	}
+	if deletedProduct == nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "product not found"})
+		return
+	}
+
+	c.Status(http.StatusNoContent)
+}

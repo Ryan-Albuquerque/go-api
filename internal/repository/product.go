@@ -71,12 +71,12 @@ func (pr *ProductRepository) GetProductByID(id int) (*model.Product, error) {
 }
 
 func (pr *ProductRepository) UpdateProduct(id int, product model.Product) (*model.Product, error) {
-	exists, err := pr.checkProductExists(id)
+	getProduct, err := pr.GetProductByID(id)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
-	if !exists {
+	if getProduct == nil {
 		fmt.Printf("product with id %d does not exist\n", id)
 		return nil, nil
 	}
@@ -97,11 +97,29 @@ func (pr *ProductRepository) UpdateProduct(id int, product model.Product) (*mode
 	return &product, nil
 }
 
-func (pr *ProductRepository) checkProductExists(id int) (bool, error) {
-	var exists bool
-	err := pr.db.QueryRow("SELECT EXISTS(SELECT 1 FROM product WHERE id = $1)", id).Scan(&exists)
+func (pr *ProductRepository) DeleteProduct(id int) (*model.Product, error) {
+	product, err := pr.GetProductByID(id)
 	if err != nil {
-		return false, err
+		fmt.Println(err)
+		return nil, err
 	}
-	return exists, nil
+	if product == nil {
+		fmt.Printf("product with id %d does not exist\n", id)
+		return nil, nil
+	}
+
+	query, err := pr.db.Prepare("DELETE FROM product WHERE id = $1")
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	_, err = query.Exec(id)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	defer query.Close()
+	return product, nil
 }

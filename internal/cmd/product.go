@@ -22,5 +22,6 @@ func ProductHandle(db *sql.DB, router *gin.Engine) {
 		pRouter.POST("/", ProductController.CreateProduct)
 		pRouter.GET("/:id", ProductController.GetProductByID)
 		pRouter.PUT("/:id", ProductController.UpdateProduct)
+		pRouter.DELETE("/:id", ProductController.DeleteProduct)
 	}
 }
