@@ -69,3 +69,39 @@ func (pr *ProductRepository) GetProductByID(id int) (*model.Product, error) {
 
 	return &product, nil
 }
+
+func (pr *ProductRepository) UpdateProduct(id int, product model.Product) (*model.Product, error) {
+	exists, err := pr.checkProductExists(id)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	if !exists {
+		fmt.Printf("product with id %d does not exist\n", id)
+		return nil, nil
+	}
+
+	query, err := pr.db.Prepare("UPDATE product SET name = $1, price = $2 WHERE id = $3")
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	_, err = query.Exec(product.Name, product.Price, id)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	query.Close()
+	return &product, nil
+}
+
+func (pr *ProductRepository) checkProductExists(id int) (bool, error) {
+	var exists bool
+	err := pr.db.QueryRow("SELECT EXISTS(SELECT 1 FROM product WHERE id = $1)", id).Scan(&exists)
+	if err != nil {
+		return false, err
+	}
+	return exists, nil
+}

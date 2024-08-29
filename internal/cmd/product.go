@@ -21,5 +21,6 @@ func ProductHandle(db *sql.DB, router *gin.Engine) {
 		pRouter.GET("/", ProductController.GetProducts)
 		pRouter.POST("/", ProductController.CreateProduct)
 		pRouter.GET("/:id", ProductController.GetProductByID)
+		pRouter.PUT("/:id", ProductController.UpdateProduct)
 	}
 }
