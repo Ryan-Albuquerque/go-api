@@ -24,6 +24,8 @@ func main() {
 		})
 	})
 
+	cmd.AuthHandle(connected, router)
+
 	cmd.ProductHandle(connected, router)
 
 	router.Run(":8000")

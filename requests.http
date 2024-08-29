@@ -3,12 +3,14 @@
 ###
 
 GET http://localhost:8000/products HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjQ5ODQ2NzgsInVzZXJuYW1lIjoicnlhbiJ9.dh2Mrw6IldwLGdS2pvP37LghJBSALrNup9tfZnYqRQg
 
 ###
 ### POST New Product
 ###
 
 POST http://localhost:8000/products HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjQ5ODQ2NzgsInVzZXJuYW1lIjoicnlhbiJ9.dh2Mrw6IldwLGdS2pvP37LghJBSALrNup9tfZnYqRQg
 content-type: application/json
 
 {
@@ -21,12 +23,14 @@ content-type: application/json
 ###
 
 GET http://localhost:8000/products/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjQ5ODQ2NzgsInVzZXJuYW1lIjoicnlhbiJ9.dh2Mrw6IldwLGdS2pvP37LghJBSALrNup9tfZnYqRQg
 
 ###
 ### UPDATE Product by ID
 ###
 
 PUT http://localhost:8000/products/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjQ5ODQ2NzgsInVzZXJuYW1lIjoicnlhbiJ9.dh2Mrw6IldwLGdS2pvP37LghJBSALrNup9tfZnYqRQg
 content-type: application/json
 
 {
@@ -39,3 +43,31 @@ content-type: application/json
 ###
 
 DELETE http://localhost:8000/products/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjQ5ODQ2NzgsInVzZXJuYW1lIjoicnlhbiJ9.dh2Mrw6IldwLGdS2pvP37LghJBSALrNup9tfZnYqRQg
+
+
+###
+### Login User
+###
+
+POST http://localhost:8000/auth/login HTTP/1.1
+content-type: application/json
+
+{
+  "username": "ryan",
+  "password": "123456"
+}
+
+
+###
+### Register User
+###
+
+POST http://localhost:8000/auth/register HTTP/1.1
+content-type: application/json
+
+{
+  "email": "ryan@gmail.com3",
+  "username": "ryadn",
+  "password": "123456"
+}

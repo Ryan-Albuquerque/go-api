@@ -4,6 +4,7 @@ import (
 	"database/sql"
 
 	"github.com/Ryan-Albuquerque/go-api/internal/controller"
+	"github.com/Ryan-Albuquerque/go-api/internal/middleware"
 	"github.com/Ryan-Albuquerque/go-api/internal/repository"
 	"github.com/Ryan-Albuquerque/go-api/internal/usecase"
 	"github.com/gin-gonic/gin"
@@ -17,6 +18,7 @@ func ProductHandle(db *sql.DB, router *gin.Engine) {
 	ProductController := controller.NewProductController(ProductUseCase)
 
 	pRouter := router.Group("/products")
+	pRouter.Use(middleware.AuthMiddleware())
 	{
 		pRouter.GET("/", ProductController.GetProducts)
 		pRouter.POST("/", ProductController.CreateProduct)
