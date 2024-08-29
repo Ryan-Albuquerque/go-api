@@ -1,23 +1,41 @@
+###
+### GET All Products
+###
 
 GET http://localhost:8000/products HTTP/1.1
 
 ###
+### POST New Product
+###
+
 POST http://localhost:8000/products HTTP/1.1
 content-type: application/json
 
 {
-    "name": "sample",
-    "price": 123
+  "name": "sample",
+  "price": 123
 }
 
 ###
-GET http://localhost:8000/products/10 HTTP/1.1
+### GET Product by ID
+###
+
+GET http://localhost:8000/products/1 HTTP/1.1
 
 ###
-PUT http://localhost:8000/products/221 HTTP/1.1
+### UPDATE Product by ID
+###
+
+PUT http://localhost:8000/products/1 HTTP/1.1
 content-type: application/json
 
 {
-  "name": "sampl2e",
+  "name": "sampl2elll",
   "price": 123
 }
+
+###
+### DELETE Product by ID
+###
+
+DELETE http://localhost:8000/products/1 HTTP/1.1
